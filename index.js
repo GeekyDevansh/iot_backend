@@ -1,8 +1,19 @@
-// Import the mysql2 package
-const mysql = require('mysql2');
+// Import necessary modules
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mysql = require('mysql');
 require('dotenv').config();
 
-// Create a connection to the database
+// Create Express application
+const app = express();
+
+// Use middleware
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Create MySQL connection
 const connection = mysql.createConnection({
   host: process.env.DB_HOSTNAME,
   user: process.env.DB_USERNAME,
@@ -10,30 +21,22 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME
 });
 
-// Connect to the database
+// Connect to MySQL database
 connection.connect((err) => {
   if (err) {
-    console.error('Error connecting to the database: ' + err.stack);
+    console.error('Error connecting to MySQL database: ', err);
     return;
   }
-  console.log('Connected to the database.');
+  console.log('Connected to MySQL database.');
 });
 
-// Retrieve data from the database
-connection.query('SELECT * FROM mytable', (err, results, fields) => {
-  if (err) {
-    console.error('Error retrieving data from the database: ' + err.stack);
-    return;
-  }
-  console.log('Data retrieved from the database:');
-  console.log(results);
+// Define API routes
+app.get('/api/hello', (req, res) => {
+  res.send('Hello from the backend!');
 });
 
-// Close the connection
-connection.end((err) => {
-  if (err) {
-    console.error('Error closing the database connection: ' + err.stack);
-    return;
-  }
-  console.log('Connection closed.');
+// Start server
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}.`);
 });
