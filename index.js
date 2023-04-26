@@ -78,7 +78,7 @@ app.get("/", (req, res) => {
 
 app.get("/sensor", (req, res) => {
   const Model = new model({
-    value: req.query.value,
+    value: req.query.pressure,
   });
   console.log(req.query);
   Model.save()
