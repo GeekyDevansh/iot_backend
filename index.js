@@ -14,29 +14,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Create MySQL connection
-const connection = mysql.createConnection({
-  host: process.env.DB_HOSTNAME,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-});
+// const connection = mysql.createConnection({
+//   host: process.env.DB_HOSTNAME,
+//   user: process.env.DB_USERNAME,
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_NAME
+// });
 
 // Connect to MySQL database
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to MySQL database: ', err);
-    return;
-  }
-  console.log('Connected to MySQL database.');
-});
+// connection.connect((err) => {
+//   if (err) {
+//     console.error('Error connecting to MySQL database: ', err);
+//     return;
+//   }
+//   console.log('Connected to MySQL database.');
+// });
 
-// Define API routes
-app.get('/api/hello', (req, res) => {
+//Define API routes
+app.get('/', (req, res) => { 
   res.send('Hello from the backend!');
 });
 
 // Start server
 const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}.`);
 });
