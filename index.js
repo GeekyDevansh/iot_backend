@@ -76,12 +76,12 @@ app.get("/", (req, res) => {
   res.send("Hello from the backend!");
 });
 
-app.get("/sensor", (req, res) => {
+app.get("/sensor", async (req, res) => {
   const Model = new model({
     value: req.query.pressure,
   });
   console.log(req.query);
-  Model.save()
+  await Model.save()
     .then((data) => res.status(200).send(data))
     .catch((err) => res.status(400).json("Error: " + err));
 
